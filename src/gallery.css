@@ -5,12 +5,3 @@
     flex-direction: row;
     justify-items: left;
 }
-.album-cover {
-    display: block;
-    height: 640px;
-    width: 640px;
-    margin: 10px 30px;
-}
-.album-name {
-    margin: 10px 30px;
-}

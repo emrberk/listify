@@ -1,8 +1,9 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useDebounce } from './hooks'
+import API from './api';
 import './searchBar.css';
 
-const SearchBar = ({ handleButtonClick, rm }) => {
+const SearchBar = ({ handleButtonClick }) => {
   const [inputValue, setInputValue] = useState('');
   const [suggestions, setSuggestions] = useState([]);
 
@@ -19,7 +20,7 @@ const SearchBar = ({ handleButtonClick, rm }) => {
   }
 
   const getSuggestions = useCallback(inputName => {
-    rm.getArtistSuggestions(inputName).then(data => setSuggestions(data));
+    API.getArtistSuggestions(inputName).then(response => setSuggestions(response.data.artists.items));
   }, []);
 
   const handleInputChange = e => {

@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import SearchBar from './SearchBar';
-import RequestManager from './api/utils';
+import API from './api/index.js';
 import AlbumsGallery from './AlbumsGallery';
 
 const App = () => {
@@ -9,13 +9,12 @@ const App = () => {
 
   const handleButtonClick = useCallback(suggestion => {
     setSearchedArtist(suggestion.name)
-    RequestManager.getAlbumsOfArtist(suggestion.id).then(data => setAlbums(data));
+    API.getAlbumsOfArtist(suggestion.id).then(response => setAlbums(response.data.items));
   }, []);
 
   return (
     <div className="App">
       <SearchBar
-        rm={RequestManager}
         handleButtonClick={handleButtonClick}
       />
       <AlbumsGallery 
