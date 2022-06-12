@@ -26,7 +26,7 @@ class API {
     );
   }
 
-  getArtistSuggestions = (name, limit = 20) => {
+  getArtistSuggestions = (name, limit = 10) => {
     return this.axios.get(`/search?type=artist&q=${name}&limit=${limit}`);
   }
 

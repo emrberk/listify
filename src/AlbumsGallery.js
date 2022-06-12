@@ -1,6 +1,4 @@
 import React from 'react';
-import api from './api';
-import { getAverageObject } from './utils';
 import AlbumCard from './AlbumCard';
 import './gallery.css';
 
@@ -13,7 +11,7 @@ const AlbumsGallery = ({ searchedArtist, albums })=> {
       </div>}
       <div className="albums-container">
         {albums.length > 0 && albums.map(album =>
-          <AlbumCard album={album} />
+          <AlbumCard key={`${album.id}-card`} album={album} />
         )}
       </div>
     </>

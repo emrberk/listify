@@ -36,7 +36,7 @@ const SearchBar = ({ handleButtonClick }) => {
   }, [debouncedInput, getSuggestions]);
 
   return (
-    <>
+    <div className="search-bar">
       <label className="search-label" htmlFor="search">Search For An Artist</label>
       <input
         className="search"
@@ -47,21 +47,29 @@ const SearchBar = ({ handleButtonClick }) => {
         className="search-dropdown"
         ref={dropdownRef}
       >
-        {suggestions.length > 0 && suggestions.map(suggestion => 
+        {suggestions.length > 0 && suggestions.map(suggestion => {console.log(suggestion); return (
           <button 
             key={suggestion.id}
             className="dropdown-item"
             onClick={() => {
-              handleButtonClick(suggestion);
-              dropdownRef.current.style.display = 'none';
-            }
+                handleButtonClick(suggestion);
+                dropdownRef.current.style.display = 'none';
+              }
             }
           >
-            {suggestion.name}
+            {suggestion.images.length > 2 &&
+              <img
+                className="dropdown-item-image"
+                src={suggestion.images[1].url}
+                alt={suggestion.name}
+              />
+            }
+            <div className="dropdown-item-name">{suggestion.name}</div>
           </button>
         )}
+        )}
       </div>
-    </>
+    </div>
   );
 }
 

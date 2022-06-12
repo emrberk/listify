@@ -30,11 +30,14 @@ export const ScAlbumCard = styled.div`
       justify-items: space-between;
       margin: 10px;
       font-size: 25px;
+      text-shadow: 3px 3px #000;
     }
   }
 
   .album-cover-blur {
     position: absolute;
+    max-height: 100%;
+    max-width: 100%;
     z-index: -1;
     filter: blur(30px);
     transform: rotateY(180deg);

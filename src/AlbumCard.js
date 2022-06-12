@@ -25,7 +25,7 @@ const AlbumCard = ({ album }) => {
           <div className="album-card-front">
             <img 
               className="album-cover"
-              key={album.id}
+              key={`${album.id}-cover`}
               src={album.images[coverIndex].url}
               alt={album.name}
             />
@@ -34,7 +34,7 @@ const AlbumCard = ({ album }) => {
             <div className="album-features">
               <img 
                 className="album-cover-blur"
-                key={album.id}
+                key={`${album.id}-blur`}
                 src={album.images[coverIndex].url}
                 alt={album.name}
               />

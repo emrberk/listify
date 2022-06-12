@@ -5,7 +5,7 @@ export const AUDIO_FEATURES = {
   'instrumentalness': [0, 1],
   'liveness': [0, 1],
   'loudness': [-60, 0],
-  'speechiness': [0, 1],
+  'speechiness': [0, 0.66],
   'tempo': [0, 200],
   'valence': [0, 1]
 }
