@@ -1,7 +1,10 @@
 .albums-container {
     display: flex;
     flex-wrap: wrap;
-    align-items: flex-start;
+    justify-content: center;
     flex-direction: row;
-    justify-items: left;
+}
+.result-info {
+    margin: 10px;
+    font-size: 60px;
 }

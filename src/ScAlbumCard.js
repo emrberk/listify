@@ -3,16 +3,31 @@ import styled from 'styled-components';
 export const ScAlbumCard = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
+  margin: 10px 30px;
 
   .album-name {
-    margin: 10px 30px;
+    text-align: center;
+    max-width: 640px;
+    font-size: 48px;
+    margin: 10px;
+    word-wrap: break-word;
   }
 
   .album-features {
+    max-height: 100%;
+    max-width: 100%;
     display: flex;
     flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
 
     &-item {
+      max-height: 100%;
+      max-width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-items: space-between;
       margin: 10px;
       font-size: 25px;
     }
@@ -35,7 +50,6 @@ export const ScAlbumCard = styled.div`
     display: block;
     height: 640px;
     width: 640px;
-    margin: 10px 30px;
     perspective: 1000px;
 
     &-inner {
@@ -64,6 +78,16 @@ export const ScAlbumCard = styled.div`
       background-color: #000;;
       color: white;
       transform: rotateY(180deg);
+    }
+  }
+  @media (max-width: 700px) {
+    margin: 10px 10px;
+    .album-card {
+      width: 300px;
+      height: 300px;
+    }
+    .album-features-item {
+      font-size: 12px;
     }
   }
 `;

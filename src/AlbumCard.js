@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react';
 import api from './api';
 import { getAverageObject } from './utils';
 import { ScAlbumCard } from './ScAlbumCard';
+import FeaturesRange from './FeaturesRange';
 
 const AlbumCard = ({ album }) => {
-
   const [features, setFeatures] = useState({});
+
+  const coverIndex = window.innerWidth < 700 ? 1 : 0;
 
   useEffect(() => {
     api.getTracksOfAlbum(album.id)
@@ -14,14 +16,6 @@ const AlbumCard = ({ album }) => {
     .then(itemIDs => api.getAudioFeatures('', itemIDs))
     .then(response => setFeatures(getAverageObject(response.data.audio_features)));
   }, [album.id]);
-
-  const getFeatures = () => {
-    return Object.keys(features).map(feature => (
-      <div className="album-features-item" key={`${album.id}-${feature}`}>
-        {feature} = {features[feature]}
-      </div>
-    ));
-  }
 
   return (
     <ScAlbumCard>
@@ -32,7 +26,7 @@ const AlbumCard = ({ album }) => {
             <img 
               className="album-cover"
               key={album.id}
-              src={album.images[0].url}
+              src={album.images[coverIndex].url}
               alt={album.name}
             />
           </div>
@@ -41,10 +35,15 @@ const AlbumCard = ({ album }) => {
               <img 
                 className="album-cover-blur"
                 key={album.id}
-                src={album.images[0].url}
+                src={album.images[coverIndex].url}
                 alt={album.name}
               />
-              {Object.keys(features).length > 0 && getFeatures()}
+              {Object.keys(features).length > 0 && 
+                <FeaturesRange
+                  id={album.id}
+                  features={features}
+                />
+              }
             </div>
           </div>
         </div>

@@ -2,6 +2,7 @@ import React, { useCallback, useState } from 'react';
 import SearchBar from './SearchBar';
 import API from './api/index.js';
 import AlbumsGallery from './AlbumsGallery';
+import './global.css';
 
 const App = () => {
   const [albums, setAlbums] = useState([]);
