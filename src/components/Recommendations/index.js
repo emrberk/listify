@@ -1,6 +1,6 @@
 import React from 'react';
 import SearchBar from '../SearchBar';
-import { ITEM_TYPES } from '../utils/constants';
+import { ITEM_TYPES } from '../../utils/constants';
 
 const Recommendations = () => {
   return (

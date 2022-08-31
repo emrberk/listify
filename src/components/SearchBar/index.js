@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { useDebounce } from '../hooks'
+import { useDebounce } from '../../utils/hooks'
 import ScSearchBar from './ScSearchBar';
-import api from '../api';
+import api from '../../api';
 
 const SearchBar = ({ type, onResultSelection }) => {
   const [inputValue, setInputValue] = useState('');

@@ -1,5 +1,5 @@
 import React from 'react';
-import { AUDIO_FEATURES } from '../utils/constants';
+import { AUDIO_FEATURES } from '../../utils/constants';
 
 const FeaturesRange = ({ id, features }) => {
   return (

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import SearchBar from '../SearchBar';
 import AlbumsGallery from './AlbumsGallery';
-import api from '../api';
-import { ITEM_TYPES } from '../utils/constants';
+import api from '../../api';
+import { ITEM_TYPES } from '../../utils/constants';
 
 const AlbumFeatures = () => {
   const [albums, setAlbums] = useState([]);

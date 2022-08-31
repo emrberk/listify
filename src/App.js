@@ -1,9 +1,9 @@
 import React from 'react';
-import TopBar from './TopBar';
-import './global.css';
-import AlbumFeatures from './AlbumFeatures';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Recommendations from './Recommendations';
+import './global.css';
+import TopBar from './components/TopBar';
+import AlbumFeatures from './components/AlbumFeatures';
+import Recommendations from './components/Recommendations';
 
 const App = () => {
   return (

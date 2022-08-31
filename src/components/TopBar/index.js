@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import ScTopBar from './ScTopBar';
-import { TABS } from './utils/constants';
+import { TABS } from '../../utils/constants';
 
 const TopBar = () => {
   const navigate = useNavigate();

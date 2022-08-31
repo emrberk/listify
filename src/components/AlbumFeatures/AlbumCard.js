@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import api from '../api';
-import { getAverageObject } from '../utils';
+import api from '../../api';
+import { getAverageObject } from '../../utils';
 import { ScAlbumCard } from './ScAlbumCard';
 import FeaturesRange from './FeaturesRange';
 

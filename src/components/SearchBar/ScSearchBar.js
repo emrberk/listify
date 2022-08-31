@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { ITEM_TYPES } from '../utils/constants';
+import { ITEM_TYPES } from '../../utils/constants';
 
 const ScSearchBar = styled.div`
   margin-top: 30px;
