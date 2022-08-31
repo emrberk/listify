@@ -1,16 +1,19 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useDebounce } from '../hooks'
-import API from '../api';
 import ScSearchBar from './ScSearchBar';
+import api from '../api';
 
-const SearchBar = ({ setAlbums }) => {
+const SearchBar = ({ type, onResultSelection }) => {
   const [inputValue, setInputValue] = useState('');
-  const [suggestions, setSuggestions] = useState([]);
 
-  const handleButtonClick = useCallback(suggestion => {
-    setInputValue(suggestion.name);
-    API.getAlbumsOfArtist(suggestion.id).then(response => setAlbums(response.data.items));
-  }, [setAlbums]);
+  const [results, setResults] = useState([]);
+
+  const typeLabel = type?.length ? type[0].toUpperCase() + type.slice(1) + 's': '';
+
+  const handleButtonClick = useCallback(result => {
+    setInputValue(result.name);
+    onResultSelection(result);
+  }, [onResultSelection]);
 
   const debouncedInput = useDebounce(inputValue, 150);
 
@@ -20,25 +23,22 @@ const SearchBar = ({ setAlbums }) => {
     dropdownRef.current.style.display = 'flex';
   }
 
-  const getSuggestions = useCallback(inputName => {
-    API.getArtistSuggestions(inputName).then(response => setSuggestions(response.data.artists.items));
-  }, []);
-
   const handleInputChange = e => {
     setInputValue(e.target.value);
   };
 
   useEffect(() => {
     if (debouncedInput.length > 1) {
-      getSuggestions(debouncedInput);
+      api.getResults(type, debouncedInput)
+      .then(items => setResults(items));
     } else {
-      setSuggestions([]);
+      setResults([]);
     }
-  }, [debouncedInput, getSuggestions]);
+  }, [debouncedInput, type]);
 
   return (
-    <ScSearchBar>
-      <label className="search-label" htmlFor="search">Search For An Artist</label>
+    <ScSearchBar type={type}>
+      <label className="search-label" htmlFor="search">{`Search For ${typeLabel}`}</label>
       <input
         className="search"
         onChange={handleInputChange}
@@ -49,23 +49,23 @@ const SearchBar = ({ setAlbums }) => {
         className="search-dropdown"
         ref={dropdownRef}
       >
-        {suggestions.length > 0 && suggestions.map(suggestion => (
+        {results?.length > 0 && results.map(result => (
           <li
-            key={suggestion.id}
+            key={result.id}
             className="dropdown-item"
             onClick={() => {
-                handleButtonClick(suggestion);
+                handleButtonClick(result);
                 dropdownRef.current.style.display = 'none';
             }}
           >
-            {suggestion.images.length > 2 &&
+            {result.images.length > 2 &&
               <img
                 className="dropdown-item-image"
-                src={suggestion.images[1].url}
-                alt={suggestion.name}
+                src={result.images[1].url}
+                alt={result.name}
               />
             }
-            <div className="dropdown-item-name">{suggestion.name}</div>
+            <div className="dropdown-item-name">{result.name}</div>
           </li>
         ))}
       </ul>

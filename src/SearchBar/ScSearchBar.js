@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { ITEM_TYPES } from '../utils/constants';
 
 const ScSearchBar = styled.div`
   margin-top: 30px;
@@ -50,8 +51,9 @@ const ScSearchBar = styled.div`
   .dropdown-item-image {
     height: 100px;
     width: 100px;
-    border-radius: 50px;
+    ${({ type }) => type === ITEM_TYPES.ARTIST ? `border-radius: 50px;` : ''}
   }
+
   .dropdown-item-name {
     margin-left: 20px;
     text-align: left;

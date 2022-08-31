@@ -30,3 +30,9 @@ export const TABS = {
   getFeatures: 'features',
   getRecommendations: 'recommendations'
 };
+
+export const ITEM_TYPES = {
+  TRACK: 'track',
+  ALBUM: 'album',
+  ARTIST: 'artist'
+};

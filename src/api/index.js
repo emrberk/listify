@@ -1,6 +1,7 @@
 import Axios from 'axios'
 import authenticators from './authenticators.json'
 import { Buffer } from 'buffer'
+import { ITEM_TYPES } from '../utils/constants';
 
 class API {
   constructor() {
@@ -13,8 +14,8 @@ class API {
       },
       data: 'grant_type=client_credentials',
       json: true
-    }).then(response => 
-      { 
+    }).then(response =>
+      {
         this.axios = Axios.create({
           baseURL: 'https://api.spotify.com/v1',
           headers: {
@@ -25,9 +26,24 @@ class API {
       }
     );
   }
+  
+  getResults = (type, name, limit = 10) => {
+    return this.axios.get(`/search?type=${type}&q=${name}&limit=${limit}`)
+    .then(response => {
+      const items = response.data[`${type}s`].items;
+      if (type === ITEM_TYPES.TRACK) {
+        items.forEach(item => item.images = item.album.images);
+      }
+      return items;
+    });
+  }
 
-  getArtistSuggestions = (name, limit = 10) => {
+  getArtistResults = (name, limit = 10) => {
     return this.axios.get(`/search?type=artist&q=${name}&limit=${limit}`);
+  }
+
+  getTrackResults = (name, limit = 10) => {
+    return this.axios.get(`/search?type=track&q=${name}&limit=${limit}`);
   }
 
   getAlbumsOfArtist = (id, market = 'US') => {
@@ -54,7 +70,6 @@ class API {
     trackIDs = trackIDs.slice(0, 5);
     trackIDs.forEach(trackID => queryString = queryString.concat(trackID + ","));
     queryString = queryString.slice(0, -1);
-    console.log('queryString =', trackIDs);
     return this.axios.get(`/recommendations?seed_tracks=${queryString}`);
   }
 
