@@ -25,3 +25,8 @@ export const KEYS = {
   '10': 'Bb',
   '11': 'B'
 };
+
+export const TABS = {
+  getFeatures: 'features',
+  getRecommendations: 'recommendations'
+};

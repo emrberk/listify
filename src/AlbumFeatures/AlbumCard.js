@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import api from './api';
-import { getAverageObject } from './utils';
+import api from '../api';
+import { getAverageObject } from '../utils';
 import { ScAlbumCard } from './ScAlbumCard';
 import FeaturesRange from './FeaturesRange';
 
@@ -15,7 +15,7 @@ const AlbumCard = ({ album }) => {
     .then(items => items.map(item => item.id))
     .then(itemIDs => api.getAudioFeatures('', itemIDs))
     .then(response => setFeatures(getAverageObject(response.data.audio_features)));
-  }, [album.id]);
+  }, [album, features]);
 
   return (
     <ScAlbumCard>

@@ -10,7 +10,7 @@ export const ScAlbumCard = styled.div`
     text-align: center;
     max-width: 640px;
     font-size: 48px;
-    margin: 10px;
+    margin: 20px 10px;
     word-wrap: break-word;
   }
 

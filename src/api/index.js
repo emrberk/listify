@@ -49,6 +49,15 @@ class API {
     }
   }
 
+  getRecommendations = (trackIDs = []) => {
+    let queryString = '';
+    trackIDs = trackIDs.slice(0, 5);
+    trackIDs.forEach(trackID => queryString = queryString.concat(trackID + ","));
+    queryString = queryString.slice(0, -1);
+    console.log('queryString =', trackIDs);
+    return this.axios.get(`/recommendations?seed_tracks=${queryString}`);
+  }
+
 };
 
 export default new API();

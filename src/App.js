@@ -1,28 +1,18 @@
-import React, { useCallback, useState } from 'react';
-import SearchBar from './SearchBar';
-import API from './api/index.js';
-import AlbumsGallery from './AlbumsGallery';
+import React from 'react';
+import TopBar from './TopBar';
 import './global.css';
+import AlbumFeatures from './AlbumFeatures';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 const App = () => {
-  const [albums, setAlbums] = useState([]);
-  const [searchedArtist, setSearchedArtist] = useState('');
-
-  const handleButtonClick = useCallback(suggestion => {
-    setSearchedArtist(suggestion.name)
-    API.getAlbumsOfArtist(suggestion.id).then(response => setAlbums(response.data.items));
-  }, []);
-
   return (
-    <div className="App">
-      <SearchBar
-        handleButtonClick={handleButtonClick}
-      />
-      <AlbumsGallery 
-        searchedArtist={searchedArtist}
-        albums={albums}
-      />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<TopBar />} default>
+        </Route>
+        <Route path="/features" element={<AlbumFeatures />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

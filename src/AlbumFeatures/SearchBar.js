@@ -1,19 +1,20 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { useDebounce } from './hooks'
-import API from './api';
-import './searchBar.css';
+import { useDebounce } from '../hooks'
+import API from '../api';
+import ScSearchBar from './ScSearchBar';
 
-const SearchBar = ({ handleButtonClick }) => {
+const SearchBar = ({ setAlbums }) => {
   const [inputValue, setInputValue] = useState('');
   const [suggestions, setSuggestions] = useState([]);
+
+  const handleButtonClick = useCallback(suggestion => {
+    setInputValue(suggestion.name);
+    API.getAlbumsOfArtist(suggestion.id).then(response => setAlbums(response.data.items));
+  }, [setAlbums]);
 
   const debouncedInput = useDebounce(inputValue, 150);
 
   const dropdownRef = useRef();
-
-  const handleSearchBlur = () => {
-    dropdownRef.current.style.display = 'none';
-  };
 
   const handleInputFocus = () => {
     dropdownRef.current.style.display = 'flex';
@@ -36,26 +37,26 @@ const SearchBar = ({ handleButtonClick }) => {
   }, [debouncedInput, getSuggestions]);
 
   return (
-    <div className="search-bar">
+    <ScSearchBar>
       <label className="search-label" htmlFor="search">Search For An Artist</label>
       <input
         className="search"
         onChange={handleInputChange}
         onFocus={handleInputFocus}
+        value={inputValue}
       />
-      <div
+      <ul
         className="search-dropdown"
         ref={dropdownRef}
       >
-        {suggestions.length > 0 && suggestions.map(suggestion => {console.log(suggestion); return (
-          <button 
+        {suggestions.length > 0 && suggestions.map(suggestion => (
+          <li
             key={suggestion.id}
             className="dropdown-item"
             onClick={() => {
                 handleButtonClick(suggestion);
                 dropdownRef.current.style.display = 'none';
-              }
-            }
+            }}
           >
             {suggestion.images.length > 2 &&
               <img
@@ -65,11 +66,10 @@ const SearchBar = ({ handleButtonClick }) => {
               />
             }
             <div className="dropdown-item-name">{suggestion.name}</div>
-          </button>
-        )}
-        )}
-      </div>
-    </div>
+          </li>
+        ))}
+      </ul>
+    </ScSearchBar>
   );
 }
 

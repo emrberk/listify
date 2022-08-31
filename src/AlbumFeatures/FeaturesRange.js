@@ -1,5 +1,5 @@
 import React from 'react';
-import { AUDIO_FEATURES } from './utils/constants';
+import { AUDIO_FEATURES } from '../utils/constants';
 
 const FeaturesRange = ({ id, features }) => {
   return (
@@ -13,6 +13,7 @@ const FeaturesRange = ({ id, features }) => {
             readOnly={true}
             min={`${AUDIO_FEATURES[feature][0]}`}
             max={`${AUDIO_FEATURES[feature][1]}`}
+            step="0.1"
             value={features[feature]}
           />
         </div>
