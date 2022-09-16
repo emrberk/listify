@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { useEffectIgnoreFirst } from '../../utils/hooks';
 import api from '../../api';
 import { getAverageObject } from '../../utils';
 import { ScAlbumCard } from './ScAlbumCard';
@@ -6,23 +7,28 @@ import FeaturesRange from './FeaturesRange';
 
 const AlbumCard = ({ album }) => {
   const [features, setFeatures] = useState({});
+  const [haveLoadedFeatures, setHaveLoadedFeatures] = useState(false);
 
   const coverIndex = window.innerWidth < 700 ? 1 : 0;
 
-  useEffect(() => {
-    api.getTracksOfAlbum(album.id)
-    .then(response => response.data.items)
-    .then(items => items.map(item => item.id))
-    .then(itemIDs => api.getAudioFeatures('', itemIDs))
-    .then(response => setFeatures(getAverageObject(response.data.audio_features)));
-  }, [album, features]);
+  useEffectIgnoreFirst(() => {
+    if (Object.keys(features).length === 0) {
+      api.getTracksOfAlbum(album.id)
+        .then(response => response.data.items)
+        .then(items => items.map(item => item.id))
+        .then(itemIDs => api.getAudioFeatures('', itemIDs))
+        .then(response => setFeatures(getAverageObject(response.data.audio_features)));
+    }
+  }, [haveLoadedFeatures]);
 
   return (
     <ScAlbumCard>
-      <div className="album-name">{album.name}</div>
       <div className="album-card">
         <div className="album-card-inner">
-          <div className="album-card-front">
+          <div className="album-card-front"
+            onClick={() => setHaveLoadedFeatures(true)}
+            onMouseOver={() => setHaveLoadedFeatures(true)}
+          >
             <img 
               className="album-cover"
               key={`${album.id}-cover`}
@@ -48,6 +54,7 @@ const AlbumCard = ({ album }) => {
           </div>
         </div>
       </div>
+      <div className="album-name">{album.name}</div>
     </ScAlbumCard>
   )
 }

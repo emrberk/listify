@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import { useDebounce } from '../../utils/hooks'
 import ScSearchBar from './ScSearchBar';
 import api from '../../api';
@@ -8,20 +8,17 @@ const SearchBar = ({ type, onResultSelection }) => {
 
   const [results, setResults] = useState([]);
 
-  const typeLabel = type?.length ? type[0].toUpperCase() + type.slice(1) + 's': '';
+  const dropdownRef = useRef();
+
+  const typeLabel = type?.length ? type[0].toUpperCase() + type.slice(1) + 's' : '';
 
   const handleButtonClick = useCallback(result => {
     setInputValue(result.name);
     onResultSelection(result);
-  }, [onResultSelection]);
+    dropdownRef.current.style.display = 'none';
+  }, [onResultSelection, dropdownRef]);
 
   const debouncedInput = useDebounce(inputValue, 150);
-
-  const dropdownRef = useRef();
-
-  const handleInputFocus = () => {
-    dropdownRef.current.style.display = 'flex';
-  }
 
   const handleInputChange = e => {
     setInputValue(e.target.value);
@@ -39,36 +36,37 @@ const SearchBar = ({ type, onResultSelection }) => {
   return (
     <ScSearchBar type={type}>
       <label className="search-label" htmlFor="search">{`Search For ${typeLabel}`}</label>
-      <input
-        className="search"
-        onChange={handleInputChange}
-        onFocus={handleInputFocus}
-        value={inputValue}
-      />
-      <ul
-        className="search-dropdown"
-        ref={dropdownRef}
-      >
-        {results?.length > 0 && results.map(result => (
-          <li
-            key={result.id}
-            className="dropdown-item"
-            onClick={() => {
+      <div className="search">
+        <input
+            className="search-input"
+            onChange={handleInputChange}
+            onFocus={() => dropdownRef.current.style.display = 'flex'}
+            value={inputValue}
+        />
+        {inputValue && (
+          <button className="search-clear" onClick={() => setInputValue('')}>X</button>
+        )}
+      </div>
+        <ul className="search-dropdown" ref={dropdownRef}>
+          {results?.length > 0 && results.map(result => (
+            <li
+              key={result.id}
+              className="dropdown-item"
+              onClick={() => {
                 handleButtonClick(result);
-                dropdownRef.current.style.display = 'none';
-            }}
-          >
-            {result.images.length > 2 &&
-              <img
-                className="dropdown-item-image"
-                src={result.images[1].url}
-                alt={result.name}
-              />
-            }
-            <div className="dropdown-item-name">{result.name}</div>
-          </li>
-        ))}
-      </ul>
+              }}
+            >
+              {result.images.length > 2 &&
+                <img
+                  className="dropdown-item-image"
+                  src={result.images[1].url}
+                  alt={result.name}
+                />
+              }
+              <div className="dropdown-item-name">{result.name}</div>
+            </li>
+          ))}
+        </ul>
     </ScSearchBar>
   );
 }

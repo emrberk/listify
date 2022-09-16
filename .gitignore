@@ -24,3 +24,6 @@ yarn-error.log*
 
 # client info
 /src/api/authenticators.json
+
+# editor
+.idea

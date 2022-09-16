@@ -9,9 +9,12 @@ export const ScAlbumCard = styled.div`
   .album-name {
     text-align: center;
     max-width: 640px;
-    font-size: 48px;
+    font-size: 30px;
     margin: 20px 10px;
     word-wrap: break-word;
+    @media screen and (max-width: 700px) {
+      font-size: 24px;
+    }
   }
 
   .album-features {

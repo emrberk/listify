@@ -2,18 +2,38 @@ import styled from 'styled-components';
 import { ITEM_TYPES } from '../../utils/constants';
 
 const ScSearchBar = styled.div`
-  margin-top: 30px;
+  margin: 30px auto;
   .search {
-    display: block;
+    display: flex;
+    flex-direction: row;
+    background: #fff;
+    border: 2px solid black;
+    padding: 5px 15px 5px 10px;
+    margin: 10px 10px 0px 10px;
     height: 50px;
     width: 330px;
-    font-size: 24px;
-    border: 2px solid black;
     border-radius: 30px;
-    padding: 5px 5px 5px 10px;
-    margin: 10px 10px 0px 10px;
+    @media screen and (max-width: 700px) {
+        height: 40px;
+    }
+    &-input {
+      box-sizing: border-box;
+      font-size: 24px;
+      height: 100%;
+      width: 100%;
+      border: 0;
+      border-radius: 30px;
+      padding: 5px;
+    }
+    &-clear {
+      background: none;
+      border: 0;
+      font-size: 25px;
+      cursor: pointer;
+      color: rgb(18, 18, 18, 255);
+    }
   }
-  .search:focus {
+  .search-input:focus {
     outline: none;
   }
   .search-label {
@@ -22,6 +42,7 @@ const ScSearchBar = styled.div`
     font-family:Arial, Helvetica, sans-serif;
   }
   .search-dropdown {
+    position: absolute;
     display: flex;
     flex-direction: column;
     width: 300px;
@@ -34,6 +55,7 @@ const ScSearchBar = styled.div`
     margin-left: 35px;
     padding: 0;
     margin-top: 0;
+    z-index: 2;
   }
   .dropdown-item {
     display: flex;

@@ -1,4 +1,7 @@
 import { AUDIO_FEATURES } from "./constants";
+import Bowser from 'bowser';
+
+export const checkIfMobile = () => Bowser.getParser(window.navigator.userAgent).is('mobile');
 
 export const getAverageObject = objects => {
     let accumulator = {};

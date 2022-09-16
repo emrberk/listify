@@ -50,7 +50,7 @@ class API {
     return this.axios.get(`/artists/${id}/albums?market=${market}`);
   }
 
-  getTracksOfAlbum = (id, market = 'US') => {
+  getTracksOfAlbum = id => {
     return this.axios.get(`/albums/${id}/tracks`);
   }
 
@@ -65,14 +65,17 @@ class API {
     }
   }
 
-  getRecommendations = (trackIDs = []) => {
-    let queryString = '';
-    trackIDs = trackIDs.slice(0, 5);
-    trackIDs.forEach(trackID => queryString = queryString.concat(trackID + ","));
-    queryString = queryString.slice(0, -1);
-    return this.axios.get(`/recommendations?seed_tracks=${queryString}`);
+  getRecommendations = (trackIDs = [], albumIDs = [], artistIDs = []) => {
+    const separateTrackIDs = trackIDs.join(',');
+    const separateAlbumIDs = albumIDs.join(',');
+    const separateArtistIDs = artistIDs.join(',');
+
+    return this.axios.get('/recommendations?' +
+    `${separateTrackIDs ? `seed_tracks=${separateTrackIDs}` : ''}` +
+    `${separateAlbumIDs ? `&seed_albums=${separateAlbumIDs}` : ''}` +
+    `${separateArtistIDs ? `&seed_artists=${separateArtistIDs}` : ''}`);
   }
 
-};
+}
 
 export default new API();
